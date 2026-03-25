@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum RoleMode {
+  Reflective_Guide
+  Gentle_Companion
+  Custom_Character
+}
+
+enum SessionStatus {
+  active
+  ended
+}
+
+enum MessageRole {
+  user
+  assistant
+}
+
+model User {
+  id        String    @id @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sessions  Session[]
+  characters Character[]
+
+  @@map("users")
+}
+
+model Character {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      String
+  roleMode  RoleMode
+  isDefault Boolean   @default(false)
+  userId    String?   @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sessions  Session[]
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([roleMode])
+  @@index([userId])
+  @@map("characters")
+}
+
+model Session {
+  id                 String        @id @default(cuid())
+  userId             String        @db.Uuid
+  characterId        String
+  roleMode           RoleMode
+  cozeConversationId String
+  status             SessionStatus @default(active)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  endedAt            DateTime?
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  character          Character     @relation(fields: [characterId], references: [id], onDelete: Restrict)
+  messages           Message[]
+  endChatResult      EndChatResult?
+  lock               EndChatLock?
+
+  @@index([userId, status])
+  @@index([characterId, status])
+  @@map("sessions")
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  sessionId String
+  role      MessageRole
+  content   String      @db.Text
+  createdAt DateTime    @default(now())
+  session   Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@map("messages")
+}
+
+model EndChatResult {
+  id                 String    @id @default(cuid())
+  sessionId          String    @unique
+  chatSummary        String    @db.Text
+  reflectionCard     String    @db.Text
+  chatTheme          String    @db.Text
+  chatEmotions       String    @db.Text
+  coreEvent          String    @db.Text
+  relationshipImpact String    @db.Text
+  deepNeed           String    @db.Text
+  rawJson            Json?
+  createdAt          DateTime  @default(now())
+  session            Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("end_chat_results")
+}
+
+model EndChatLock {
+  sessionId String   @id
+  requestId String
+  lockUntil DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([lockUntil])
+  @@map("end_chat_locks")
+}
