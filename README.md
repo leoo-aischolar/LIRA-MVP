@@ -145,9 +145,9 @@ E. 表达质感（10分）：语言是否自然、温和、有连续性。
   <img src="./public/picture_draft/liragit/lira_workflow.png" width="92%" />
 </p>
 
-- 工作流链路：**End Chat → Summary → Reflection → Structure**
+- 工作流链路(用户视角)：End Chat → Summary → Reflection → Structure
 - 输出格式：结构化 JSON，直接服务 Reflection / Memory 页面
-- 性能表现：**平均响应时间 2.9s**
+- 性能表现：平均响应时间 2.9s
 - 体验目标：在“结束会话”的关键时刻，快速提供可沉淀、可回看的疗愈信息
 
 ---
