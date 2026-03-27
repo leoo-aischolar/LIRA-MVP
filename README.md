@@ -38,10 +38,19 @@ LIRA 是一个以角色关系为核心的 AI 陪伴应用。
 ### Core Pages
 
 <p align="center">
-  <img src="./public/picture_draft/liragit/lira_today.png" width="19%" />
-  <img src="./public/picture_draft/liragit/lira_reflection.png" width="19%" />
-  <img src="./public/picture_draft/liragit/lira_memory.png" width="19%" />
-  <img src="./public/picture_draft/liragit/lira_chatmode.png" width="19%" />
+  <img src="./public/picture_draft/liragit/lira_today.png" width="23%" />
+  <img src="./public/picture_draft/liragit/lira_reflection.png" width="23%" />
+  <img src="./public/picture_draft/liragit/lira_memory.png" width="23%" />
+  <img src="./public/picture_draft/liragit/lira_chatmode.png" width="23%" />
+</p>
+
+### Chat Pages
+
+<p align="center">
+  <img src="./public/picture_draft/liragit/chat-chat.png" width="19%" />
+  <img src="./public/picture_draft/liragit/endchat-summary.png" width="19%" />
+  <img src="./public/picture_draft/liragit/endchat-reflection.png" width="19%" />
+  <img src="./public/picture_draft/liragit/endchat-structure.png" width="19%" />
   <img src="./public/picture_draft/liragit/lira_role.png" width="19%" />
 </p>
 
